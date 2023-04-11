@@ -1,8 +1,7 @@
 package com.capgemini.opleidingsplatform.Presentation;
 
-import com.capgemini.opleidingsplatform.CategoryService;
+import com.capgemini.opleidingsplatform.Application.CategoryService;
 import com.capgemini.opleidingsplatform.Presentation.dto.CategoryDTO;
-import com.capgemini.opleidingsplatform.Presentation.dto.TestDTO;
 import com.capgemini.opleidingsplatform.domain.Category;
 import com.capgemini.opleidingsplatform.domain.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
