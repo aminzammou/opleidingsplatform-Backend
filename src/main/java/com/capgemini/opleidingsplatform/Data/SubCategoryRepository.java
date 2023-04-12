@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SubCategoryRepository extends MongoRepository<SubCategory,UUID> {
-    @Query("{'_id._id': ?0 }")
+    @Query("{'_id': ?0 }")
     Optional<SubCategory> findBySubCategoryId(UUID id);
 
     @Query("{'name': ?0 }")

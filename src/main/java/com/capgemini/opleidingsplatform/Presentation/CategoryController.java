@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/category")
@@ -37,9 +38,15 @@ public class CategoryController {
         return cat;
     }
 
-    @GetMapping("/{name}")
-    public Category getCategoryByCode(@PathVariable String name) throws CategoryNotFoundException {
-        return categoryService.findByName(name);
+    @GetMapping("/{id}")
+    public Category getCategoryByCode(@PathVariable String id) throws CategoryNotFoundException {
+        UUID uId = UUID.fromString(id);
+        return categoryService.findById(uId);
     }
+
+//    @GetMapping("/{name}")
+//    public Category getCategoryByCode(@PathVariable String name) throws CategoryNotFoundException {
+//        return categoryService.findByName(name);
+//    }
 
 }

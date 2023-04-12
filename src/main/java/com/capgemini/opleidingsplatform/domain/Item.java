@@ -2,11 +2,17 @@ package com.capgemini.opleidingsplatform.domain;
 
 import com.capgemini.opleidingsplatform.domain.Category;
 import com.capgemini.opleidingsplatform.domain.SubCategory;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
+@Getter
+@Setter
+@Document
 public class Item {
 
     @Id
@@ -16,10 +22,10 @@ public class Item {
     @DBRef
     private SubCategory subCategory;
 
-    public Item(String name, String description, SubCategory category) {
+    public Item(String name, String description, SubCategory subCategory) {
         this.itemId = UUID.randomUUID();
         this.name = name;
         this.description = description;
-        this.subCategory = category;
+        this.subCategory = subCategory;
     }
 }
