@@ -1,13 +1,17 @@
 package com.capgemini.opleidingsplatform.Application;
 
+import com.capgemini.opleidingsplatform.Data.HttpResultRespository;
 import com.capgemini.opleidingsplatform.Data.ItemRepository;
 import com.capgemini.opleidingsplatform.Data.SubCategoryRepository;
+import com.capgemini.opleidingsplatform.Presentation.dto.CodeDTO;
+import com.capgemini.opleidingsplatform.Presentation.dto.CodeResultDTO;
 import com.capgemini.opleidingsplatform.Presentation.dto.ItemDTO;
 import com.capgemini.opleidingsplatform.Presentation.dto.SubCategoryDTO;
 import com.capgemini.opleidingsplatform.domain.Category;
 import com.capgemini.opleidingsplatform.domain.Item;
 import com.capgemini.opleidingsplatform.domain.SubCategory;
 import com.capgemini.opleidingsplatform.domain.exception.CategoryNotFoundException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +22,14 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final SubCategoryService subCategoryService;
 
+    private HttpResultRespository httpResultRespository = new HttpResultRespository();
+
     public ItemService(ItemRepository itemRepository, SubCategoryService subCategoryService) {
         this.itemRepository = itemRepository;
         this.subCategoryService = subCategoryService;
+    }
+    public CodeResultDTO createRusultItem (CodeDTO dto) throws JsonProcessingException {
+       return httpResultRespository.makePostRequest(dto.getCode(), dto.getTime());
     }
     public String createItem (ItemDTO dto) throws CategoryNotFoundException {
         try {
@@ -40,7 +49,7 @@ public class ItemService {
         Item updated = itemRepository.save(item);
         return updated;
     }
-//
+
     public Item deleteItem(String name) throws CategoryNotFoundException {
         Item item = itemRepository.findByItemName(name).orElseThrow(() -> new CategoryNotFoundException("category was not found !"));
         itemRepository.delete(item);
@@ -68,7 +77,7 @@ public class ItemService {
     public Item ItemByDTO(ItemDTO dto) throws CategoryNotFoundException {
         UUID id = UUID.fromString(dto.getSubCategoryId());
         SubCategory subCategory = subCategoryService.findById(id);
-        return new Item(dto.getName(), dto.getDescription(),subCategory);
+        return new Item(dto.getName(), dto.getDescription(), dto.getCode(),subCategory);
     }
 
 }

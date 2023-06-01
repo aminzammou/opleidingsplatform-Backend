@@ -67,7 +67,8 @@ public class SubCategoryService {
     }
 
     public SubCategory SubCategoryByDTO(SubCategoryDTO dto) throws CategoryNotFoundException {
-        UUID id = UUID.fromString(dto.getName());
+        System.out.println(dto.getName());
+        UUID id = UUID.fromString(dto.getCategoryId());
         Category category = categoryService.findById(id);
         return new SubCategory(dto.getName(), dto.getDescription(),category);
     }

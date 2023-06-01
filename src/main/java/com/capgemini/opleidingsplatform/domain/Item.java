@@ -19,13 +19,15 @@ public class Item {
     private UUID itemId;
     private String name;
     private String description;
+    private String code;
     @DBRef
     private SubCategory subCategory;
 
-    public Item(String name, String description, SubCategory subCategory) {
+    public Item(String name, String description,String code , SubCategory subCategory) {
         this.itemId = UUID.randomUUID();
         this.name = name;
         this.description = description;
+        this.code = code;
         this.subCategory = subCategory;
     }
 }
