@@ -77,7 +77,7 @@ public class ItemService {
     public Item ItemByDTO(ItemDTO dto) throws CategoryNotFoundException {
         UUID id = UUID.fromString(dto.getSubCategoryId());
         SubCategory subCategory = subCategoryService.findById(id);
-        return new Item(dto.getName(), dto.getDescription(), dto.getCode(),subCategory);
+        return new Item(dto.getName(), dto.getDescription(), dto.getCode(),subCategory, dto.getInplace(), dto.getStable());
     }
 
 }

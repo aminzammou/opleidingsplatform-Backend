@@ -20,14 +20,20 @@ public class Item {
     private String name;
     private String description;
     private String code;
+
+    private Boolean inplace;
+
+    private Boolean stable;
     @DBRef
     private SubCategory subCategory;
 
-    public Item(String name, String description,String code , SubCategory subCategory) {
+    public Item(String name, String description,String code , SubCategory subCategory, boolean inplace ,boolean stable) {
         this.itemId = UUID.randomUUID();
         this.name = name;
         this.description = description;
         this.code = code;
         this.subCategory = subCategory;
+        this.inplace = inplace;
+        this.stable = stable;
     }
 }

@@ -12,4 +12,8 @@ public class ItemDTO {
     private String code;
     private String subCategoryId;
 
+    private Boolean inplace;
+
+    private Boolean stable;
+
 }
