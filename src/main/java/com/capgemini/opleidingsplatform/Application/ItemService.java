@@ -2,12 +2,9 @@ package com.capgemini.opleidingsplatform.Application;
 
 import com.capgemini.opleidingsplatform.Data.HttpResultRespository;
 import com.capgemini.opleidingsplatform.Data.ItemRepository;
-import com.capgemini.opleidingsplatform.Data.SubCategoryRepository;
 import com.capgemini.opleidingsplatform.Presentation.dto.CodeDTO;
 import com.capgemini.opleidingsplatform.Presentation.dto.CodeResultDTO;
 import com.capgemini.opleidingsplatform.Presentation.dto.ItemDTO;
-import com.capgemini.opleidingsplatform.Presentation.dto.SubCategoryDTO;
-import com.capgemini.opleidingsplatform.domain.Category;
 import com.capgemini.opleidingsplatform.domain.Item;
 import com.capgemini.opleidingsplatform.domain.SubCategory;
 import com.capgemini.opleidingsplatform.domain.exception.CategoryNotFoundException;
@@ -28,7 +25,7 @@ public class ItemService {
         this.itemRepository = itemRepository;
         this.subCategoryService = subCategoryService;
     }
-    public CodeResultDTO createRusultItem (CodeDTO dto) throws JsonProcessingException {
+    public CodeResultDTO createResultItem(CodeDTO dto) throws JsonProcessingException {
        return httpResultRespository.makePostRequest(dto.getCode(), dto.getTime());
     }
     public String createItem (ItemDTO dto) throws CategoryNotFoundException {
@@ -46,6 +43,10 @@ public class ItemService {
         Item item = itemRepository.findByItemName(dto.getName())
                 .orElseThrow(() -> new CategoryNotFoundException("item was not found !"));
         item.setName(dto.getName());
+        item.setDescription(dto.getDescription());
+        item.setStable(dto.getStable());
+        item.setInplace(dto.getInplace());
+        item.setCode(dto.getCode());
         Item updated = itemRepository.save(item);
         return updated;
     }

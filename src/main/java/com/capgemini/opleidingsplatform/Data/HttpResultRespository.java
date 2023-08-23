@@ -2,6 +2,7 @@ package com.capgemini.opleidingsplatform.Data;
 
 import com.capgemini.opleidingsplatform.Presentation.dto.CodeResultDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,7 +24,16 @@ public class HttpResultRespository {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // Define the request body
-        String requestBody = "{ \"Name\": \"" + name + "\", \"Code\": \"" + code + "\", \"Time\": " + time + " }";
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode requestBodyObject = mapper.createObjectNode();
+        requestBodyObject.put("Name", name);
+        requestBodyObject.put("Code", code);
+        requestBodyObject.put("Time", time);
+        String requestBody = mapper.writeValueAsString(requestBodyObject);
+
+
+        //String requestBody = "{ \"Name\": \"" + name + "\", \"Code\": \"" + code + "\", \"Time\": " + time + " }";
         HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
 
         // Send the request and retrieve the response
@@ -41,7 +51,7 @@ public class HttpResultRespository {
         double executionTime = responseJson.get("result").get("executionTime").asDouble();
         double memoryUsage = responseJson.get("result").get("memoryUsage").asDouble();
 
-        CodeResultDTO codeRes = new CodeResultDTO(executionTime,memoryUsage);
+        CodeResultDTO codeRes = new CodeResultDTO(executionTime, memoryUsage);
 
         System.out.println("Response Code: " + statusCode);
         System.out.println("Response Headers: " + responseHeaders);

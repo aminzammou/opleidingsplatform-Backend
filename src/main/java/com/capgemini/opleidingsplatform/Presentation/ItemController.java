@@ -1,13 +1,10 @@
 package com.capgemini.opleidingsplatform.Presentation;
 
 import com.capgemini.opleidingsplatform.Application.ItemService;
-import com.capgemini.opleidingsplatform.Application.SubCategoryService;
 import com.capgemini.opleidingsplatform.Presentation.dto.CodeDTO;
 import com.capgemini.opleidingsplatform.Presentation.dto.CodeResultDTO;
 import com.capgemini.opleidingsplatform.Presentation.dto.ItemDTO;
-import com.capgemini.opleidingsplatform.Presentation.dto.SubCategoryDTO;
 import com.capgemini.opleidingsplatform.domain.Item;
-import com.capgemini.opleidingsplatform.domain.SubCategory;
 import com.capgemini.opleidingsplatform.domain.exception.CategoryNotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +32,8 @@ public class ItemController {
 
     @PostMapping("/result")
     public CodeResultDTO getResultItem(@RequestBody CodeDTO DTO) throws JsonProcessingException {
-         return itemService.createRusultItem(DTO);
+        System.out.println(DTO.getCode() + " en  " + DTO.getTime());
+         return itemService.createResultItem(DTO);
     }
 
     @DeleteMapping("/{name}")
@@ -54,6 +52,12 @@ public class ItemController {
         UUID uId = UUID.fromString(id);
         return itemService.findById(uId);
     }
+
+    @PutMapping("/{id}")
+    public Item updateItem(@PathVariable String id, @RequestBody ItemDTO DTO) throws CategoryNotFoundException {
+        return itemService.updateItem(DTO);
+    }
+
 
 //    @GetMapping("/{name}")
 //    public Item getItemByCode(@PathVariable String name) throws CategoryNotFoundException {
